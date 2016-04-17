@@ -10,6 +10,10 @@ LABELS="car bike skateboard"
 # Set up folders
 mkdir -p $ANNOTATEDFRAMEPATH
 cd /root/vatic
+
+# start database
 sudo /etc/init.d/mysql start
+
+# load frames and publish. This will print out access URLs.
 turkic load $ID $ANNOTATEDFRAMEPATH $LABELS $TURKOPS
 turkic publish --offline

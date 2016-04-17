@@ -30,6 +30,7 @@ And this will get me the URL to access the server. Now use the previous URLs fro
 
 ## TODO:
 - [x] Connect to server from host
-- [ ] Successfully annotate video and prove the process works.
-- [ ] Annotate videos with only one command.
-- [ ] Persistent storage via volumes
+- [x] Successfully annotate video and prove the process works.
+- [ ] Start annotating videos with only one command.
+- [ ] Easily dump annotation data
+- [ ] Persistent storage
