@@ -30,20 +30,18 @@ RUN cd /root && \
     sudo python setup.py install
 
 
-COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
-COPY apache2.conf /etc/apache2/apache2.conf
+COPY config/000-default.conf /etc/apache2/sites-enabled/000-default.conf
+COPY config/apache2.conf /etc/apache2/apache2.conf
 
 RUN sudo cp /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled && \
-    sudo apache2ctl graceful && \
+    sudo apache2ctl graceful
 
-RUN sudo /etc/init.d/mysql start && \
-    mysql -u root --execute="CREATE DATABASE vatic;"
-
-COPY config.py /root/vatic/config.py
+COPY config/config.py /root/vatic/config.py
+COPY scripts/ /root/vatic
 
 # We need to adjust some of these guys's import statements...
 RUN sed  -i'' "s/import Image/from PIL import Image/" \
-    /usr/local/lib/python2.7/dist-packages/pyvision-0.3.1-py2.7-linux-x86_64.egg/vision/frameiterators.py
+    /usr/local/lib/python2.7/dist-packages/pyvision-0.3.1-py2.7-linux-x86_64.egg/vision/frameiterators.py \
     /usr/local/lib/python2.7/dist-packages/pyvision-0.3.1-py2.7-linux-x86_64.egg/vision/ffmpeg.py \
     /usr/local/lib/python2.7/dist-packages/pyvision-0.3.1-py2.7-linux-x86_64.egg/vision/visualize.py \
     /root/vatic/models.py \
@@ -51,9 +49,21 @@ RUN sed  -i'' "s/import Image/from PIL import Image/" \
     /usr/local/lib/python2.7/dist-packages/pyvision-0.3.1-py2.7-linux-x86_64.egg/vision/pascal.py
 
 RUN sudo /etc/init.d/mysql start && \
-    cd /root/vatic
+    cd /root/vatic && \
+    mysql -u root --execute="CREATE DATABASE vatic;" && \
     turkic setup --database && \
     turkic setup --public-symlink
 
 RUN sudo chown -R 755 /root/vatic/public && \
+    find /root -type d -exec chmod 775 {} \; && \
+    sudo chmod -R 775 /var/www && \
+    apt-get install -y links && \
     sudo apache2ctl restart
+
+# Debug tools
+RUN apt-get install -y nano w3m man
+
+# Prepare workspace for use
+EXPOSE 80 443
+# VOLUME ["/var/www", "/var/log/apache2", "/etc/apache2"]
+# ENTRYPOINT ["/root/vatic/startup.sh"]
