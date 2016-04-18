@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ANNOTATION_SCRIPT=example.sh
+ANNOTATION_SCRIPT=$1
 
 JOB=$(\
 docker run -ditP -v "$PWD/data":/root/vatic/data \
