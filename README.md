@@ -1,5 +1,3 @@
-**Under construction. Doesn't work yet.**
-
 # vatic-docker
 Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic
 
@@ -9,7 +7,7 @@ Right now everything runs in the same container. The parsed video frames reside 
 To annotate a video you must 1) extract the video into frames, and 2) publish the task, either locally or on Amazon Turk. I'll go over running annotations locally.
 
 ### To extract video:
-Store your videos in `./data/videos_in` and run `/extract_video.sh`. The frames will be sent to `./data/frames_in`. The example annotation script automatically runs this script, so to save some time you can just place your video in the right spot and skip to the next step.
+Store your videos in `./data/videos_in` and run `./extract_video.sh`. The frames will be sent to `./data/frames_in`. The example annotation script automatically runs this script, so to save some time you can just place your video in the right spot and skip to the next step.
 
 ### To annotate
 Before we start, let me say I'm working on making this easier. Ok.
