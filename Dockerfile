@@ -37,7 +37,6 @@ RUN sudo cp /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled &
     sudo apache2ctl graceful
 
 COPY config/config.py /root/vatic/config.py
-COPY scripts/ /root/vatic
 
 # We need to adjust some of these guys's import statements...
 RUN sed  -i'' "s/import Image/from PIL import Image/" \
@@ -62,6 +61,7 @@ RUN sudo chown -R 755 /root/vatic/public && \
 
 # Debug tools
 RUN apt-get install -y nano w3m man
+COPY scripts/ /root/vatic
 
 # Prepare workspace for use
 EXPOSE 80 443

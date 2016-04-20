@@ -15,33 +15,14 @@ docker run -v "$PWD/data":/root/vatic/data jldowns/vatic-docker /root/vatic/extr
 ```
 
 ### To annotate
-Before we start, let me say I'm working on making this easier.
-
-Store your publishing script in `./annotation_scripts`. Run `annotate.sh <name of annotation script>`. This repository contains a script called `example.sh`, so to run it type
+Store your publishing script in `./annotation_scripts`. Run `vatic_up.sh <name of annotation script>`. This repository contains a script called `example.sh`, so to run it type
 ```
-./annotate.sh example.sh
+./vatic_up.sh example.sh
 ```
 
-The example script does some things to streamline the process. It automatically calls the database/server startup script and opens a bash shell at the end. I recommend basing your annotation scripts on the example script, at least the first time.
+The example script does some things to streamline the process. It automatically calls the database/server startup script and opens a bash shell at the end. It also creates an HTML directory page, with a list of links to your published videos. Note that `annotation.sh`, running on the host, stored an IP:PORT in a file located in `./data/tmp`. Shared files are really the only way for the host machine and the guest process to communicate. I recommend basing your annotation scripts on the example script, at least the first time.
 
-This is where things get a little more involved. When the `annotate.sh` script runs, it also prints out the local address and port that the Docker container is bound to. Take note of this. This is the address that is forwarded to `localhost` inside the container. After publishing the videos, turkic will print out the URLs you use to access the annotation tool. For example, it might print out something that looks like:
-```
-http://localhost/?id=1&hitId=offline
-http://localhost/?id=2&hitId=offline
-http://localhost/?id=3&hitId=offline
-```
-Replace `localhost` with the IP:PORT that the script had printed out for you. For example, if the script reported
-
-```
----- Container attached at http://192.168.99.100:32813/
-```
-
-you can annotate your videos at
-```
-http://192.168.99.100:32813/?id=1&hitId=offline
-http://192.168.99.100:32813/?id=2&hitId=offline
-http://192.168.99.100:32813/?id=3&hitId=offline
-```
+The last thing `example.sh` does is print out a URL that you can access that lists your published videos. That is a URL that is accessible from your host machine.
 
 ### To get your annotations out of the container
 
@@ -62,11 +43,11 @@ You can then restart and reattach the container and dump your data by typing
 docker start $JOB
 docker attach $JOB
 ```
-where `$JOB` is the container ID. It's likely that the ID is still stored in the variable if you used the `annotate.sh` script.
+where `$JOB` is the container ID. It's likely that the ID is still stored in the variable if you used the `vatic_up.sh` script.
 
 ## TODO:
 - [x] Connect to server from host
 - [x] Successfully annotate video and prove the process works.
-- [ ] Start annotating videos with only one command.
+- [x] Start annotating videos with only one command.
 - [ ] More easily dump annotation data
-- [ ] Persistent storage
+- [ ] Automated testing

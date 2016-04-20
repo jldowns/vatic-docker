@@ -8,8 +8,7 @@ mkdir -p $FRAMEPATH
 mkdir -p $DONEVIDEOPATH
 
 cd /root/vatic
-
-for i in $( ls $TODOVIDEOPATH/*.mp4); do
-    turkic extract $i $FRAMEPATH --width 720 --height 480
-    mv $i $DONEVIDEOPATH/
+for i in $( ls $TODOVIDEOPATH); do
+    turkic extract $TODOVIDEOPATH/$i $FRAMEPATH --width 720 --height 480
+    mv $TODOVIDEOPATH/$i $DONEVIDEOPATH/
 done
