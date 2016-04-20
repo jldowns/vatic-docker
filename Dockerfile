@@ -3,11 +3,10 @@ FROM ubuntu:trusty
 RUN apt-get update && \
     apt-get install -y wget git python-setuptools python-dev libavcodec-dev libavformat-dev libswscale-dev libjpeg62 libjpeg62-dev libfreetype6 libfreetype6-dev apache2 libapache2-mod-wsgi mysql-server-5.5 mysql-client-5.5 libmysqlclient-dev gfortran python-pip && \
     # the add-apt-repository command isn't included in ubuntu. we'll get it here.
-    apt-get -y install software-properties-common python-software-properties && \
+    apt-get install -y software-properties-common python-software-properties && \
     add-apt-repository ppa:mc3man/trusty-media -y && \
-    sudo apt-get dist-upgrade && \
     apt-get update && \
-    apt-get -y install ffmpeg gstreamer0.10-ffmpeg
+    apt-get install -y ffmpeg gstreamer0.10-ffmpeg
 
 RUN sudo pip install SQLAlchemy==1.0.0 && \
     sudo pip install wsgilog==0.3 && \
@@ -61,6 +60,8 @@ RUN sudo chown -R 755 /root/vatic/public && \
 
 # Debug tools
 RUN apt-get install -y nano w3m man
+
+# moved to the end to make troubleshooting quicker
 COPY scripts/ /root/vatic
 
 # Prepare workspace for use

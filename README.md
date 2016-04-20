@@ -22,7 +22,7 @@ Store your publishing script in `./annotation_scripts`. Run `vatic_up.sh <name o
 
 The example script does some things to streamline the process. It automatically calls the database/server startup script and opens a bash shell at the end. It also creates an HTML directory page, with a list of links to your published videos. Note that `annotation.sh`, running on the host, stored an IP:PORT in a file located in `./data/tmp`. Shared files are really the only way for the host machine and the guest process to communicate. I recommend basing your annotation scripts on the example script, at least the first time.
 
-The last thing `example.sh` does is print out a URL that you can access that lists your published videos. That is a URL that is accessible from your host machine.
+The last thing `example.sh` does is print out a URL that you can access that lists your published videos. That is a URL that is accessible from your host machine. Point your browser there and annotate away! You can even set up your machine to forward incoming traffic at the Docker container for collaborative annotations. Note that this is still "offline mode" since you're not using Amazon's services.
 
 ### To get your annotations out of the container
 

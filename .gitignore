@@ -1,10 +1,12 @@
+### Project Specific ###
 /data/tmp
 /data/videos_out
 /data/frames_in
 
 
-# Created by https://www.gitignore.io/api/osx
 
+
+# Created by https://www.gitignore.io/api/osx
 ### OSX ###
 .DS_Store
 .AppleDouble
