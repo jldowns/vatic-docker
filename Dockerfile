@@ -61,8 +61,8 @@ RUN sudo chown -R 755 /root/vatic/public && \
 # Debug tools
 RUN apt-get install -y nano w3m man
 
-# moved to the end to make troubleshooting quicker
 COPY scripts/ /root/vatic
+# moved to the end to make troubleshooting quicker
 
 # Prepare workspace for use
 EXPOSE 80 443
