@@ -23,7 +23,7 @@ else
 fi
 
 ### Check that Dockerfile builds
-# docker build --no-cache -t jldowns/vatic-docker:test-build .
+docker build --no-cache -t jldowns/vatic-docker:test-build .
 
 echo "Build passes."
 
@@ -32,7 +32,7 @@ echo "Starting server.."
 JOB=$(\
 docker run -ditP -v "$PWD/data":/root/vatic/data \
                  -v "$PWD/annotation_scripts":/root/vatic/ascripts \
-                 jldowns/vatic-docker /bin/bash -C /root/vatic/start_and_block.sh \
+                 jldowns/vatic-docker:test-build /bin/bash -C /root/vatic/start_and_block.sh \
     )
 PORT=$(docker port $JOB 80 | awk -F: '{ print $2 }')
 
