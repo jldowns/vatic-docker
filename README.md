@@ -1,4 +1,5 @@
-# vatic-docker
+# vatic-docker [![Build Status](https://travis-ci.org/jldowns/vatic-docker.svg?branch=master)](https://travis-ci.org/jldowns/vatic-docker)
+
 Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic
 
 Right now everything runs in the same container. The parsed video frames reside on a volume on the host and therefore persist between runs. The direction below also explain how to dump the annotations to the volume. The only way to access the annotations outside the container is to dump them to a shared volume (like `/root/vatic/data`.) Emergency data retrieval procedures are outlined below.
@@ -33,7 +34,7 @@ turkic dump currentvideo -o /root/vatic/data/output.txt
 ```
 Where `currentvideo` is the ID from your annotation script and `ouput.txt` is the filename you want your annotations to be saved to. Look in your `./data` folder for the annotations.
 
-## Ahh! I accidentally exited before dumping the annotation!
+## Ahh! I accidentally exited before dumping the annotations!
 Find the container you just stopped by typing
 ```
 docker ps -a
@@ -45,9 +46,12 @@ docker attach $JOB
 ```
 where `$JOB` is the container ID. It's likely that the ID is still stored in the variable if you used the `vatic_up.sh` script.
 
+## Caveats:
+I have not tested the Amazon Mechanical Turk features.
+
 ## TODO:
 - [x] Connect to server from host
 - [x] Successfully annotate video and prove the process works.
 - [x] Start annotating videos with only one command.
 - [ ] More easily dump annotation data
-- [ ] Automated testing
+- [X] Automated testing
