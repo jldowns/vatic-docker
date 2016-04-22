@@ -28,13 +28,19 @@ fi
 echo "Build passes."
 
 ### Ensure webserver starts up
+echo "Starting server.."
 JOB=$(\
 docker run -ditP -v "$PWD/data":/root/vatic/data \
                  -v "$PWD/annotation_scripts":/root/vatic/ascripts \
                  jldowns/vatic-docker /bin/bash -C /root/vatic/start_and_block.sh \
     )
 PORT=$(docker port $JOB 80 | awk -F: '{ print $2 }')
-DHOSTIP=$(docker-machine ip default)
+
+if [ $1 = "--native" ]; then
+    DHOSTIP=localhost
+else
+    DHOSTIP=$(docker-machine ip default)
+fi
 
 
 
