@@ -1,0 +1,7 @@
+
+
+services:
+    - docker
+
+script:
+    - ./testing/pre-commit.sh
