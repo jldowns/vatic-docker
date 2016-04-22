@@ -4,4 +4,4 @@ services:
     - docker
 
 script:
-    - ./testing/pre-commit.sh
+    - ./testing/test_build.sh
