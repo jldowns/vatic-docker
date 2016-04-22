@@ -28,12 +28,10 @@ fi
 echo "Build passes."
 
 ### Ensure webserver starts up
-echo "Checking webserver"
-
 JOB=$(\
 docker run -ditP -v "$PWD/data":/root/vatic/data \
                  -v "$PWD/annotation_scripts":/root/vatic/ascripts \
-                 jldowns/vatic-docker /bin/bash -C /root/vatic/start_and_block.sh \
+                 jldowns/vatic-docker:test-build /bin/bash -C /root/vatic/start_and_block.sh \
     )
 
 
@@ -44,6 +42,8 @@ else
     PORT=$(docker port $JOB 80 | awk -F: '{ print $2 }')
     DHOSTIP=$(docker-machine ip default)
 fi
+
+echo "Checking webserver at $DHOSTIP:$PORT"
 
 echo "Waiting for server to boot..."
 # check 10 times, give 10 seconds between tries, for a total of 100 seconds
