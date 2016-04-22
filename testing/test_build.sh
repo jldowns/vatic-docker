@@ -23,7 +23,7 @@ else
 fi
 
 ### Check that Dockerfile builds
-docker build --no-cache -t jldowns/vatic-docker:test-build .
+# docker build --no-cache -t jldowns/vatic-docker:test-build .
 
 echo "Build passes."
 
@@ -36,8 +36,14 @@ docker run -ditP -v "$PWD/data":/root/vatic/data \
                  jldowns/vatic-docker /bin/bash -C /root/vatic/start_and_block.sh \
     )
 
-PORT=$(docker port $JOB 80 | awk -F: '{ print $2 }')
-DHOSTIP=$(docker-machine ip default)
+
+if [ $1 = "--native" ]; then
+    PORT=80
+    DHOSTIP=localhost
+else
+    PORT=$(docker port $JOB 80 | awk -F: '{ print $2 }')
+    DHOSTIP=$(docker-machine ip default)
+fi
 
 echo "Waiting for server to boot..."
 # check 10 times, give 10 seconds between tries, for a total of 100 seconds
