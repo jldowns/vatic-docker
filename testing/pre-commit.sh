@@ -1,7 +1,8 @@
 # To ensure that you don't accidentally commit a bad build to the master branch,
 # add this to your hooks by running
 #
-# cp ./testing/pre-commit.sh ./.git/hooks/
+# cp ./testing/pre-commit.sh ./.git/hooks/pre-commit
+# chmod +x ./.git/hooks/pre-commit
 #
 # Since building an image without caching takes between 8 and 9 minutes, this
 # script will only run when commiting on the master branch. For quick prototyping,
