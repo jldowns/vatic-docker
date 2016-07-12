@@ -4,7 +4,7 @@
 ID=currentvideo
 ANNOTATEDFRAMEPATH=/root/vatic/data/frames_in
 TURKOPS="--offline --title HelloTurk!"
-LABELS="car bike skateboard"
+LABELS="ak47"
 HOST_ADDRESS_FILE=/root/vatic/data/tmp/host_address.txt
 
 # Start database and server
@@ -18,7 +18,7 @@ mkdir -p $ANNOTATEDFRAMEPATH
 cd /root/vatic
 
 # start database
-sudo /etc/init.d/mysql start
+#sudo /etc/init.d/mysql start
 
 # load frames and publish. This will print out access URLs.
 turkic load $ID $ANNOTATEDFRAMEPATH $LABELS $TURKOPS
@@ -37,7 +37,13 @@ mkdir -p /root/vatic/public/directory
 { turkic publish --offline |\
   tee /dev/fd/3 | sed "s/http/<a href='http/" |\
                   sed "s/offline/offline'> Video Segment <\/a><br>/" |\
-                  sed "s/localhost/$HOSTADDRESS/" > /root/vatic/public/directory/index.html; } 3>&1
+                  sed "s/localhost/localhost$HOSTADDRESS/" > /root/vatic/public/directory/index.html; } 3>&1
+
+# add some user interface controls
+cat $PWD/ascripts/myhtml.html >> /root/vatic/public/directory/index.html
+cp $PWD/ascripts/myphp.php  /root/vatic/public/directory
+chgrp -R www-data /root/vatic/data
+chmod 775 /root/vatic/data
 
 
 # open up a bash shell on the server

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+function callLabelphp(label) {
+    $.ajax({
+        url: 'myphp.php',
+        type: 'post',
+        data: {action: 'doLabels', labelout: label },
+        success: function(output) {
+            alert(output);
+        }
+    });
+};
+</script>
+
+</head>
+<body>
+<form>
+<br>
+Click on above links to create/edit annotations of the video.
+<br>
+Click on the below button once your annotations are done to output to a file called "output.xml".
+<br>
+<br>
+<input type="button" name="doLabels" value="Output Labels" onclick="callLabelphp()"/>
+</form
+</body>

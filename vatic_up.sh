@@ -1,7 +1,8 @@
 #!/bin/bash
 
-ANNOTATION_SCRIPT=$1
+ANNOTATION_SCRIPT=example.sh
 HOST_ADDRESS_FILE="./data/tmp/host_address.txt"
+whoami
 mkdir -p ./data/tmp
 echo "booting..." > $HOST_ADDRESS_FILE
 

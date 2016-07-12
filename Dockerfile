@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 
 RUN apt-get update && \
-    apt-get install -y wget git python-setuptools python-dev libavcodec-dev libavformat-dev libswscale-dev libjpeg62 libjpeg62-dev libfreetype6 libfreetype6-dev apache2 libapache2-mod-wsgi mysql-server-5.5 mysql-client-5.5 libmysqlclient-dev gfortran python-pip && \
+    apt-get install -y wget git python-setuptools python-dev libavcodec-dev libavformat-dev libswscale-dev libjpeg62 libjpeg62-dev libfreetype6 libfreetype6-dev apache2 libapache2-mod-wsgi mysql-server-5.5 mysql-client-5.5 libmysqlclient-dev gfortran python-pip php5-cgi libapache2-mod-php5 && \
     # the add-apt-repository command isn't included in ubuntu. we'll get it here.
     apt-get install -y software-properties-common python-software-properties && \
     add-apt-repository ppa:mc3man/trusty-media -y && \

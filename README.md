@@ -18,7 +18,7 @@ docker run -v "$PWD/data":/root/vatic/data jldowns/vatic-docker /root/vatic/extr
 ### To annotate
 Store your publishing script in `./annotation_scripts`. Run `vatic_up.sh <name of annotation script>`. This repository contains a script called `example.sh`, so to run it type
 ```
-./vatic_up.sh example.sh
+./vatic_up.sh
 ```
 
 The example script does some things to streamline the process. It automatically calls the database/server startup script and opens a bash shell at the end. It also creates an HTML directory page, with a list of links to your published videos. Note that `annotation.sh`, running on the host, stored an IP:PORT in a file located in `./data/tmp`. Shared files are really the only way for the host machine and the guest process to communicate. I recommend basing your annotation scripts on the example script, at least the first time.
@@ -27,7 +27,11 @@ The last thing `example.sh` does is print out a URL that you can access that lis
 
 ### To get your annotations out of the container
 
+After you annotate your videos, you can just hit the button "Output Labels" to save your work.  This will have your annotations in labelme format in the file "output.xml" in the data directory.
+
 This is why the example script opens up a bash shell at the end; you have to do this step on the command line. Navigate to `/root/vatic` and type the following command
+
+You can also go to the command prompt and execute the below command from within the docker machine.
 
 ```
 turkic dump currentvideo -o /root/vatic/data/output.txt
@@ -53,5 +57,5 @@ I have not tested the Amazon Mechanical Turk features.
 - [x] Connect to server from host
 - [x] Successfully annotate video and prove the process works.
 - [x] Start annotating videos with only one command.
-- [ ] More easily dump annotation data
+- [X] More easily dump annotation data
 - [X] Automated testing
