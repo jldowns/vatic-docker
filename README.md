@@ -2,7 +2,7 @@
 
 Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic
 
-Right now everything runs in the same container. The parsed video frames reside on a volume on the host and therefore persist between runs. The direction below also explain how to dump the annotations to the volume. The only way to access the annotations outside the container is to dump them to a shared volume (like `/root/vatic/data`.) Emergency data retrieval procedures are outlined below.
+Right now everything runs in the same container. The parsed video frames reside on a volume on the host and therefore persist between runs. The directions below also explain how to dump the annotations to the volume. The only way to access the annotations outside the container is to dump them to a shared volume (like `/root/vatic/data`.) Emergency data retrieval procedures are outlined below.
 
 ## Running:
 To annotate a video you must 1) extract the video into frames, and 2) publish the task, either locally or on Amazon Turk. I'll go over running annotations locally.
