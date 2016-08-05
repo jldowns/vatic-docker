@@ -8,7 +8,7 @@ echo "booting..." > $HOST_ADDRESS_FILE
 JOB=$(\
 docker run -ditP -v "$PWD/data":/root/vatic/data \
                  -v "$PWD/annotation_scripts":/root/vatic/ascripts \
-                 jldowns/vatic-docker /bin/bash -C /root/vatic/ascripts/$ANNOTATION_SCRIPT \
+                 sorflex/vatic-docker /bin/bash -C /root/vatic/ascripts/$ANNOTATION_SCRIPT \
     )
 
 PORT=$(docker port $JOB 80 | awk -F: '{ print $2 }')
