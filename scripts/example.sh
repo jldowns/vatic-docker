@@ -2,12 +2,44 @@
 
 # Settings
 ID=currentvideo
+VIDEOPATH=/root/vatic/data/videos_in
 ANNOTATEDFRAMEPATH=/root/vatic/data/frames_in
 TURKOPS="--offline --title HelloTurk!"
-LABELS=`cat /root/vatic/data/labels.txt`
-HOST_ADDRESS_FILE=/root/vatic/data/tmp/host_address.txt
-echo "Labels = $LABELS"
+LABEL_FILE=/root/vatic/data/labels.txt
+if [ -f "$LABEL_FILE" ]
+then
+    LABELS=`cat $LABEL_FILE`
+    echo "Labels = $LABELS"
+else
+    echo "!!! data/labels.txt is required !!!!"
+    echo "This file is a single line space seperated list of label names"
+    exit 1
+fi
 
+NEWVIDEO=0
+OLDVIDEO=0
+if [ -d "/root/vatic/data" ]
+then
+    if [ -d ${VIDEOPATH} ]
+    then
+        if test "$(ls -A ${VIDEOPATH} 2>/dev/null)"
+        then
+            echo "New Videos to process."
+            NEWVIDEO=1
+        else
+            echo "No new videos to process."
+        fi
+   fi 
+fi
+if [ -d ${ANNOTATEDFRAMEPATH} ]
+then
+    OLDVIDEO=1
+fi
+if [ ${NEWVIDEO} -eq 0 -a  ${OLDVIDEO} -eq 0 ]
+then
+    echo "!!!No new video or access to previous video's frames!!!"
+    exit 1
+fi
 # Start database and server
 /root/vatic/startup.sh
 
