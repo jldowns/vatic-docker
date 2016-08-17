@@ -9,7 +9,7 @@ Dockerfile and configuration files for using VATIC in a Docker container. Uses t
 
 ## SETUP
 
-In the directory where you want to run the docker command create a directory called 'data'.  In that directory create a directory called 'video_in'.  In the 'video_in' directory put the video that you want to annotate.
+In the directory where you want to run the docker command create a directory called 'data'.  In that directory create a directory called 'videos_in'.  In the 'videos_in' directory put the video that you want to annotate.
 
 In the 'data' directory create a text file called 'labels.txt'.  Put all the object types that you want to label on the first line seperated by spaces.  So for example, if you are going to annotate people and cars put one line in 'labels.txt' that has 'people cars'.
 
@@ -21,13 +21,16 @@ If you are using a docker-machine, you will have to start it and run docker-mach
 
 To start the container run the following command:
 
-    docker run -itp -v data:/root/vatic/data npsvisionlab/vatic-docker /bin/bash -C /root/vatic/example.sh
+      docker run -it -p 8111:80 -v $PWD/data:/root/vatic/data npsvisionlab/vatic-docker /bin/bash -C /root/vatic/example.sh
 
-This will start the apache web server and create image frames from the video located in "video_in".  The frames will be put in "frames_in" and the video will be moved to the folder called "video_out"
+Note that $PWD is the parent directory of the data directory and that on windows the format should be "//c/directory_path/data" where c is the drive letter.
+Note that 8111 is the port that you will want to direct your browser to.  If that port is not available the choose another.
 
-Find the ip address and port number that the server is running on.  If you are using docker-machine, 'docker-machine ip default' will show you the port and 'docker-machine port JOBID 80' will output the port the server is listening on.
+This will start the apache web server and create image frames from the video located in "videos_in".  The frames will be put in "frames_in" and the video will be moved to the folder called "videos_out"
 
-Open up a brower to point to http:/xxxx.xxxx.xxxx.xxxx:PORT/directory where the xxxx.xxxx.xxxx.xxxx is the ip-address and PORT is the port number.
+Find the ip address that the server is running on.  If you are using docker-machine, 'docker-machine ip default' will show you ip-address the server is listening on.
+
+Open up a brower to point to http:/xxxx.xxxx.xxxx.xxxx:8111/directory where the xxxx.xxxx.xxxx.xxxx is the ip-address and 8111 is the port number (if not changed).
 
 ## ANNOTATING A VIDEO
 
