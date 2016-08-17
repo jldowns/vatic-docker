@@ -1,4 +1,4 @@
-# vatic-docker [![Build Status](https://travis-ci.org/npsvisionlab/vatic-docker.svg?branch=master)](https://travis-ci.org/npsvisionlab/vatic-docker)
+# vatic-docker [![Build Status](https://github.com/NPSVisionLab/vatic-docker.svg?branch=master)](https://github.com/NPSVisionLab/vatic-docker)
 
 # vatic-docker - Packaged up Vatic video annotation tool
 
