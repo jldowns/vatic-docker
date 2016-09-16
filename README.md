@@ -30,7 +30,7 @@ This will start the apache web server and create image frames from the video loc
 
 Find the ip address that the server is running on.  If you are using docker-machine, 'docker-machine ip default' will show you ip-address the server is listening on.
 
-Open up a brower to point to http:/xxxx.xxxx.xxxx.xxxx:8111/directory where the xxxx.xxxx.xxxx.xxxx is the ip-address and 8111 is the port number (if not changed).
+Open up a browser to point to http:/xxxx.xxxx.xxxx.xxxx:8111/directory where the xxxx.xxxx.xxxx.xxxx is the ip-address and 8111 is the port number (if not changed).
 
 ## ANNOTATING A VIDEO
 
