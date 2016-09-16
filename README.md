@@ -1,57 +1,41 @@
-# vatic-docker [![Build Status](https://travis-ci.org/jldowns/vatic-docker.svg?branch=master)](https://travis-ci.org/jldowns/vatic-docker)
+# vatic-docker [![Build Status](https://github.com/NPSVisionLab/vatic-docker.svg?branch=master)](https://github.com/NPSVisionLab/vatic-docker)
 
-Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic
+# vatic-docker - Packaged up Vatic video annotation tool
 
 Right now everything runs in the same container. The parsed video frames reside on a volume on the host and therefore persist between runs. The directions below also explain how to dump the annotations to the volume. The only way to access the annotations outside the container is to dump them to a shared volume (like `/root/vatic/data`.) Emergency data retrieval procedures are outlined below.
 
-## Running:
-To annotate a video you must 1) extract the video into frames, and 2) publish the task, either locally or on Amazon Turk. I'll go over running annotations locally.
+Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic.  This docker container will start an apache web server that will allow you to create annotation labels from within a browser and save those annotations to an xml file.  See the VATIC github site for a description of VATIC. Currently "offline mode" is the only mode supported.
 
-### To extract video:
-Store your videos in `./data/videos_in`. The extracted frames will be sent to `./data/frames_in`. The example annotation script automatically runs the extraction script, so to after placing your video in the right spot you can skip to the next step. Note that after extraction the video is moved to `./data/videos_out` so that the system doesn't try to extract it again.
 
-If you just want to extract the frames without running an annotation script, you can run
-```
-docker run -v "$PWD/data":/root/vatic/data jldowns/vatic-docker /root/vatic/extract.sh
-```
+## SETUP
 
-### To annotate
-Store your publishing script in `./annotation_scripts`. Run `vatic_up.sh <name of annotation script>`. This repository contains a script called `example.sh`, so to run it type
-```
-./vatic_up.sh example.sh
-```
+In the directory where you want to run the docker command create a directory called 'data'.  In that directory create a directory called 'videos_in'.  In the 'videos_in' directory put the video that you want to annotate.
 
-The example script does some things to streamline the process. It automatically calls the database/server startup script and opens a bash shell at the end. It also creates an HTML directory page, with a list of links to your published videos. Note that `annotation.sh`, running on the host, stored an IP:PORT in a file located in `./data/tmp`. Shared files are really the only way for the host machine and the guest process to communicate. I recommend basing your annotation scripts on the example script, at least the first time.
+In the 'data' directory create a text file called 'labels.txt'.  Put all the object types that you want to label on the first line seperated by spaces.  So for example, if you are going to annotate people and cars put one line in 'labels.txt' that has 'people cars'.
 
-The last thing `example.sh` does is print out a URL that you can access that lists your published videos. That is a URL that is accessible from your host machine. Point your browser there and annotate away! You can even set up your machine to forward incoming traffic at the Docker container for collaborative annotations. Note that this is still "offline mode" since you're not using Amazon's services.
+The 'data' directory is shared by the host and the docker container and it will put the results back into that directory.
 
-### To get your annotations out of the container
+If you are using a docker-machine, you will have to start it and run docker-machine env and configure your env to point to it.
 
-This is why the example script opens up a bash shell at the end; you have to do this step on the command line. Navigate to `/root/vatic` and type the following command
+## RUNNING
 
-```
-turkic dump currentvideo -o /root/vatic/data/output.txt
-```
-Where `currentvideo` is the ID from your annotation script and `ouput.txt` is the filename you want your annotations to be saved to. Look in your `./data` folder for the annotations.
+To start the container run the following command:
 
-## Ahh! I accidentally exited before dumping the annotations!
-Find the container you just stopped by typing
-```
-docker ps -a
-```
-You can then restart and reattach the container and dump your data by typing
-```
-docker start $JOB
-docker attach $JOB
-```
-where `$JOB` is the container ID. It's likely that the ID is still stored in the variable if you used the `vatic_up.sh` script.
+      docker run -it -p 8111:80 -v $PWD/data:/root/vatic/data npsvisionlab/vatic-docker /bin/bash -C /root/vatic/example.sh
 
-## Caveats:
-I have not tested the Amazon Mechanical Turk features.
+Note that $PWD is the parent directory of the data directory and that on windows the format should be "//c/directory_path/data" where c is the drive letter.
+Note that 8111 is the port that you will want to direct your browser to.  If that port is not available the choose another.
 
-## TODO:
-- [x] Connect to server from host
-- [x] Successfully annotate video and prove the process works.
-- [x] Start annotating videos with only one command.
-- [ ] More easily dump annotation data
-- [X] Automated testing
+This will start the apache web server and create image frames from the video located in "videos_in".  The frames will be put in "frames_in" and the video will be moved to the folder called "videos_out"
+
+Find the ip address that the server is running on.  If you are using docker-machine, 'docker-machine ip default' will show you ip-address the server is listening on.
+
+Open up a brower to point to http:/xxxx.xxxx.xxxx.xxxx:8111/directory where the xxxx.xxxx.xxxx.xxxx is the ip-address and 8111 is the port number (if not changed).
+
+## ANNOTATING A VIDEO
+
+When you select one of the video links, it will open a page to allow labeling of the video.  The label objects for the objects you can label appear on the right side of the video.  These you defined by putting them in a file called labels.txt in the data directory.  The labels are space delimited and all on one line.  
+
+After you annotate your videos, you can just hit the button "Output Labels" to save your work.  This will save your annotations in labelme format in the file "output.xml" in the data directory.  It will also save a copy of the database in the data directory so when you start up another docker session you can continue where you left off.
+
+When you are done annotating the video just type in <ctl>c or exit to close the docker container.
