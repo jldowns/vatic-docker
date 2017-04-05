@@ -1,6 +1,6 @@
 # vatic-docker
 
-** I am no longer actively maintaining this project. I have a new version following the VATIC `contrib` branch at  https://github.com/jldowns/vatic-docker-contrib, with a simpler workflow. This repo will stick around for a while to ensure that no projects are derailed. Sorry about the move. **
+**I am no longer actively maintaining this project. I have a new version following the VATIC `contrib` branch at  https://github.com/jldowns/vatic-docker-contrib, with a simpler workflow. This repo will stick around for a while to ensure that no projects are derailed. Sorry about the move.**
 
 Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic
 
