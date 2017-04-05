@@ -1,6 +1,15 @@
-# vatic-docker [![Build Status](https://travis-ci.org/jldowns/vatic-docker.svg?branch=master)](https://travis-ci.org/jldowns/vatic-docker)
+# vatic-docker
+
+** I am no longer actively maintaining this project. I have a new version following the VATIC `contrib` branch at  https://github.com/jldowns/vatic-docker-contrib, with a simpler workflow. This repo will stick around for a while to ensure that no projects are derailed. Sorry about the move. **
 
 Dockerfile and configuration files for using VATIC in a Docker container. Uses the VATIC software located at https://github.com/cvondrick/vatic
+
+When using this software, please cite the authors:
+```
+Carl Vondrick, Donald Patterson, Deva Ramanan. "Efficiently Scaling Up
+Crowdsourced Video Annotation" International Journal of Computer Vision
+(IJCV). June 2012.
+```
 
 Right now everything runs in the same container. The parsed video frames reside on a volume on the host and therefore persist between runs. The direction below also explain how to dump the annotations to the volume. The only way to access the annotations outside the container is to dump them to a shared volume (like `/root/vatic/data`.) Emergency data retrieval procedures are outlined below.
 
